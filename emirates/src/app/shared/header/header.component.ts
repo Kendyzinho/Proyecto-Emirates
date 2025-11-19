@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  showCart = false;
+  showFlights = false;
+  
+  cities = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman'];
 
+  toggleCart() {
+    this.showCart = !this.showCart;
+  }
+
+  toggleFlights() {
+    this.showFlights = !this.showFlights;
+  }
 }

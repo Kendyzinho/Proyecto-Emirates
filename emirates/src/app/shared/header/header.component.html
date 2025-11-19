@@ -1,1 +1,40 @@
-<p>header works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="assets/emirates.png" alt="Emirates" height="40">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" (click)="toggleFlights()" style="cursor: pointer;">Vuelos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Iniciar sesión</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Registrarse</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Ayuda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="toggleCart()" style="cursor: pointer;">Carrito</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div class="flights-dropdown" *ngIf="showFlights">
+  <div class="cities-list">
+    <h3>Ciudades</h3>
+    <div *ngFor="let city of cities" class="city-item">{{city}}</div>
+  </div>
+</div>
+
+<div class="cart-sidebar" [class.active]="showCart">
+  <button class="close-btn" (click)="toggleCart()">✕</button>
+</div>
