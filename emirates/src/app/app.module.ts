@@ -20,6 +20,7 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { AdminFlightsListComponent } from './admin/admin-flights-list/admin-flights-list.component';
 import { AdminFlightAddComponent } from './admin/admin-flight-add/admin-flight-add.component';
 import { AdminFlightEditComponent } from './admin/admin-flight-edit/admin-flight-edit.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AdminFlightEditComponent } from './admin/admin-flight-edit/admin-flight
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

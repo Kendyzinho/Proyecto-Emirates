@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+  usuario = {
+    email: '',
+    password: '',
+    recordar: false
+  }
+  
+  procesarLogin(){
+    console.log(this.usuario);
+  }
 }

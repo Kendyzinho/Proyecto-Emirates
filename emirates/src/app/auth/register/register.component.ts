@@ -7,4 +7,18 @@ import { Component } from '@angular/core';
 })
 export class RegisterComponent {
 
+
+  persona = {
+
+    nombre: '',
+    apellido: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  }
+  
+  procesarInformacion(){
+
+    console.log(this.persona)
+  }
 }

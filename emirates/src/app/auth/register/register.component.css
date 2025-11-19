@@ -1,0 +1,57 @@
+/* Gradiente de fondo personalizado */
+.bg-gradient-custom {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+}
+
+/* Gradiente del header */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+}
+
+/* Animación del logo */
+.logo-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Mejoras en los inputs */
+.form-control-lg {
+  border-width: 2px;
+  background-color: #f8f9fa;
+}
+
+.form-control-lg:focus {
+  background-color: #fff;
+  border-color: #dc2626;
+  box-shadow: 0 0 0 0.25rem rgba(220, 38, 38, 0.15);
+}
+
+/* Botón personalizado */
+.btn-primary {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+}
+
+.btn-primary:disabled {
+  background: #6c757d;
+  opacity: 0.65;
+}
+
+/* Sombra del card */
+.shadow-lg {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.3) !important;
+}
