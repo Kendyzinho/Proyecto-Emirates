@@ -100,7 +100,7 @@
 }
 
 .cart-sidebar.active {
-  right: 20px;
+  right: 0;
 }
 
 .close-btn {
