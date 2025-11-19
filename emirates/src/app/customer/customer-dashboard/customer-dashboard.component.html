@@ -1,1 +1,89 @@
-<p>customer-dashboard works!</p>
+<div class="page-container">
+
+  <div class="booking-card">
+
+    <div class="top-row">
+      
+      <div class="select-box">
+        <label>Tipo de viaje</label>
+        <select [(ngModel)]="tripType" (change)="onTripTypeChange()">
+          <option value="roundtrip">Ida y Vuelta</option>
+          <option value="oneway">Solo Ida</option>
+          <option value="multi">Multidestino</option>
+        </select>
+      </div>
+
+      <div class="select-box">
+        <label>Cabina</label>
+        <select [(ngModel)]="cabinClass">
+          <option value="economy">Economy Class</option>
+          <option value="premium">Premium Economy</option>
+          <option value="business">Business Class</option>
+          <option value="first">First Class</option>
+        </select>
+      </div>
+
+      <div class="select-box">
+        <label>Pasajeros</label>
+        <select [(ngModel)]="passengers">
+          <option *ngFor="let p of passengerOptions" [value]="p">{{ p }}</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="bottom-row">
+
+      <div class="autocomplete-wrapper">
+        <input 
+          class="input"
+          type="text"
+          placeholder="Origen"
+          [(ngModel)]="origin"
+          (input)="filterAirports('origin')"
+          (focus)="showDropdown('origin')"
+        />
+
+        <ul class="dropdown" *ngIf="originDropdown">
+          <li *ngFor="let a of filteredOrigins" (click)="selectAirport('origin', a)">
+            <div class="city">{{ a.city }}, {{ a.country }}</div>
+            <div class="airport">{{ a.airport }}</div>
+            <span class="code">{{ a.code }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="autocomplete-wrapper">
+        <input 
+          class="input"
+          type="text"
+          placeholder="Destino"
+          [(ngModel)]="destination"
+          (input)="filterAirports('destination')"
+          (focus)="showDropdown('destination')"
+        />
+
+        <ul class="dropdown" *ngIf="destinationDropdown">
+          <li *ngFor="let a of filteredDestinations" (click)="selectAirport('destination', a)">
+            <div class="city">{{ a.city }}, {{ a.country }}</div>
+            <div class="airport">{{ a.airport }}</div>
+            <span class="code">{{ a.code }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="date-box">
+        <label>Ida</label>
+        <input type="date" [(ngModel)]="departureDate">
+      </div>
+
+      <div class="date-box" [class.disabled]="tripType === 'oneway'">
+        <label>Vuelta</label>
+        <input type="date" [(ngModel)]="returnDate" [disabled]="tripType === 'oneway'">
+      </div>
+
+      <button class="search-btn" (click)="search()">Buscar</button>
+
+    </div>
+  </div>
+</div>
