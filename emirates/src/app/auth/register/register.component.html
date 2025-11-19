@@ -1,1 +1,98 @@
-<p>register works!</p>
+
+
+<div style="margin-top: 7rem;">
+
+    <div>   
+
+    
+    <h1 class="text-danger display-3 text-center fw-bold mb-4"> REGISTRO </h1>
+
+    </div>
+
+
+
+<div>
+
+    <div class="card-body fondo-formulario">
+
+        <form  (ngSubmit)="procesarInformacion()" #formValidacion="ngForm">
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Nombre
+                </label>
+
+                <input class="form-control mb-3" type="text" name="nombre" placeholder="Héctor Ossandón" [(ngModel)]="persona.nombre" required #name="ngModel">
+
+                <div class="alert alert-danger" [hidden]="name.valid || name.pristine">
+                    Campo obligatorio
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Apellido
+                </label>
+
+                <input class="form-control mb-3" type="text" name="apellido" placeholder="Ingrese apellido" [(ngModel)]="persona.apellido" required #apellido="ngModel">
+
+                <div class="alert alert-danger" [hidden]="apellido.valid || apellido.pristine">
+                    Campo obligatorio
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Email
+                </label>
+
+                <input class="form-control mb-3" type="email" name="email" placeholder="aracena@gmail.com" [(ngModel)]="persona.email" required #email="ngModel">
+
+                <div class="alert alert-danger" [hidden]="email.valid || email.pristine">
+                    Campo obligatorio
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Contraseña
+                </label>
+                <input class="form-control mb-3" type="password" name="password" placeholder="Mínimo 8 caracteres" [(ngModel)]="persona.password" required  #password="ngModel">
+                
+                <div class="alert alert-danger" [hidden]="password.valid || password.pristine">
+                    La contraseña debe tener al menos 8 caracteres
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Confirmar contraseña
+                </label>
+                <input class="form-control mb-3" type="password" name="confirmPassword" placeholder="Repetir la contraseña" [(ngModel)]="persona.confirmPassword" required  #confirmPassword="ngModel">
+
+                <div class="alert alert-danger" [hidden]="persona.password === persona.confirmPassword || confirmPassword.pristine">
+                    Contraseñas no coinciden
+                </div>
+            </div>
+
+
+            <button class="btn btn-secondary d-block mx-auto" [disabled]="formValidacion.invalid">
+                Registrarse
+            </button>
+        </form>
+
+
+
+    </div>
+
+</div>
+</div>
