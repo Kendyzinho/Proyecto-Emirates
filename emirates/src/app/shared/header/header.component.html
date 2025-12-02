@@ -11,17 +11,34 @@
           <li class="nav-item">
             <a class="nav-link" (click)="toggleFlights()" style="cursor: pointer;">Vuelos</a>
           </li>
-          <li class="nav-item">
+          <!-- Opciones cuando NO está logueado -->
+          <li class="nav-item" *ngIf="!isLoggedIn">
             <a class="nav-link" href="/login">Iniciar sesión</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="!isLoggedIn">
             <a class="nav-link" href="/register">Registrarse</a>
           </li>
+
+          <!-- Opciones para ADMIN -->
+          <li class="nav-item" *ngIf="isAdmin">
+            <a class="nav-link" href="/admin/dashboard">Panel Admin</a>
+          </li>
+
+          <!-- Opciones para CLIENTE -->
+          <li class="nav-item" *ngIf="isCliente">
+            <a class="nav-link" href="/customer/profile">Mi Cuenta</a>
+          </li>
+          <li class="nav-item" *ngIf="isCliente">
+            <a class="nav-link" (click)="toggleCart()" style="cursor: pointer;">Carrito</a>
+          </li>
+          
+          <!-- Cerrar sesión (visible para todos los logueados) -->
+          <li class="nav-item" *ngIf="isLoggedIn">
+            <a class="nav-link" (click)="logout()" style="cursor: pointer;">Cerrar sesión</a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="#">Ayuda</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="toggleCart()" style="cursor: pointer;">Carrito</a>
           </li>
         </ul>
       </div>

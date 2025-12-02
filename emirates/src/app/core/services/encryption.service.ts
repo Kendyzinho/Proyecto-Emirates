@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as CryptoJS from 'crypto-js'; // da error para que no se preocupen, es algo que estoy probando. ~Bairon
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,7 @@ import * as CryptoJS from 'crypto-js'; // da error para que no se preocupen, es 
 export class EncryptionService {
 
   // Clave secreta para cifrado (en producción, esto debería estar en variables de entorno)
-  private secretKey = 'Emirates-SecretKey-2024';
+  private secretKey = 'Emirates-SecretKey';
 
   constructor() { }
 

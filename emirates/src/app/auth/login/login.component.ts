@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,42 +9,27 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) { }
 
   usuario = {
     email: '',
     password: '',
     recordar: false
   }
-  
-  procesarLogin(){
-    
-    // Obtener usuarios del localStorage
-    const usuariosGuardados = localStorage.getItem('usuarios');
-    
-    if (!usuariosGuardados) {
-      alert('No hay usuarios registrados');
-      return;
-    }
 
-    const usuarios = JSON.parse(usuariosGuardados);
-
-    // Buscar usuarios con emails y passwords coincidentes
-    const usuarioEncontrado = usuarios.find((u: any) =>
-      u.email === this.usuario.email && u.password === this.usuario.password
+  procesarLogin() {
+    // Validar credenciales usando el AuthService
+    const usuarioEncontrado = this.authService.validarCredenciales(
+      this.usuario.email,
+      this.usuario.password
     );
-
 
     if (usuarioEncontrado) {
       // Login exitoso
       console.log('Login exitoso:', usuarioEncontrado);
 
-      // Guardar sesión si marcó "recordar"
-      if (this.usuario.recordar) {
-        localStorage.setItem('usuarioActual', JSON.stringify(usuarioEncontrado));
-      } else {
-        sessionStorage.setItem('usuarioActual', JSON.stringify(usuarioEncontrado));
-      }
+      // Usar el método login del AuthService que maneja el cifrado
+      this.authService.login(usuarioEncontrado, this.usuario.recordar);
 
       alert('Bienvenido ' + usuarioEncontrado.nombre);
       // Redirigir al home
@@ -52,6 +38,6 @@ export class LoginComponent {
       // Login fallido
       alert('Email o contraseña incorrectos');
     }
- }
+  }
 
 }

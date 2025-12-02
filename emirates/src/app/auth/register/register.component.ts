@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { EncryptionService } from '../../core/services/encryption.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -7,17 +10,23 @@ import { Component } from '@angular/core';
 })
 export class RegisterComponent {
 
+  constructor(
+    private encryptionService: EncryptionService,
+    private router: Router,
+    private authService: AuthService
+  ) { }
+
 
   persona = {
-
     nombre: '',
     apellido: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    rol: 'cliente' // Por defecto todos son clientes
   }
-  
-  procesarInformacion(){
+
+  procesarInformacion() {
 
     // Validar que las contraseñas coincidan
     if (this.persona.password !== this.persona.confirmPassword) {
@@ -26,8 +35,17 @@ export class RegisterComponent {
     }
 
     // Obtener usuarios existentes del localStorage
+    // Obtener usuarios existentes del localStorage
     const usuariosGuardados = localStorage.getItem('usuarios');
-    let usuarios = usuariosGuardados ? JSON.parse(usuariosGuardados) : [];
+    let usuarios = [];
+
+    if (usuariosGuardados) {
+      try {
+        usuarios = this.encryptionService.decrypt(usuariosGuardados) || [];
+      } catch (e) {
+        usuarios = [];
+      }
+    }
 
     // Verificar si el email ya está registrado
     const emailExiste = usuarios.some((u: any) => u.email === this.persona.email);
@@ -41,14 +59,20 @@ export class RegisterComponent {
       nombre: this.persona.nombre,
       apellido: this.persona.apellido,
       email: this.persona.email,
-      password: this.persona.password
+      password: this.persona.password,
+      rol: this.persona.rol
     };
     usuarios.push(nuevoUsuario);
 
     // Guardar en localStorage
-    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+    localStorage.setItem('usuarios', this.encryptionService.encrypt(usuarios));
     console.log('Usuario registrado exitosamente:', nuevoUsuario);
+
+    // Auto-login (sin recordar por defecto en el registro)
+    this.authService.login(nuevoUsuario, false);
+
     alert('Registro exitoso');
+    this.router.navigate(['/home']);
 
     // Limpiar formulario
     this.persona = {
@@ -56,7 +80,8 @@ export class RegisterComponent {
       apellido: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      rol: 'cliente'
     };
   }
 }
