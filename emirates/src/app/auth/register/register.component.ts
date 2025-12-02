@@ -67,8 +67,8 @@ export class RegisterComponent {
     localStorage.setItem('usuarios', this.encryptionService.encrypt(usuarios));
     console.log('Usuario registrado exitosamente:', nuevoUsuario);
 
-    // Auto-login
-    this.authService.login(nuevoUsuario);
+    // Auto-login (sin recordar por defecto en el registro)
+    this.authService.login(nuevoUsuario, false);
 
     alert('Registro exitoso');
     this.router.navigate(['/home']);

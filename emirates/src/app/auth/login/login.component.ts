@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { EncryptionService } from '../../core/services/encryption.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +9,7 @@ import { EncryptionService } from '../../core/services/encryption.service';
 })
 export class LoginComponent {
 
-  constructor(private router: Router, private encryptionService: EncryptionService) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   usuario = {
     email: '',
@@ -18,47 +18,18 @@ export class LoginComponent {
   }
 
   procesarLogin() {
-
-    // Obtener usuarios del localStorage
-    const usuariosGuardados = localStorage.getItem('usuarios');
-
-    if (!usuariosGuardados) {
-      alert('No hay usuarios registrados');
-      return;
-    }
-
-    let usuarios = [];
-    try {
-      usuarios = this.encryptionService.decrypt(usuariosGuardados);
-      if (!usuarios) {
-        // Fallback por si acaso falla o es data vieja no encriptada (opcional, pero mejor prevenir)
-        try {
-          usuarios = JSON.parse(usuariosGuardados);
-        } catch (e) {
-          usuarios = [];
-        }
-      }
-    } catch (error) {
-      console.error('Error al descifrar usuarios', error);
-      usuarios = [];
-    }
-
-    // Buscar usuarios con emails y passwords coincidentes
-    const usuarioEncontrado = usuarios.find((u: any) =>
-      u.email === this.usuario.email && u.password === this.usuario.password
+    // Validar credenciales usando el AuthService
+    const usuarioEncontrado = this.authService.validarCredenciales(
+      this.usuario.email,
+      this.usuario.password
     );
-
 
     if (usuarioEncontrado) {
       // Login exitoso
       console.log('Login exitoso:', usuarioEncontrado);
 
-      // Guardar sesión si marcó "recordar"
-      if (this.usuario.recordar) {
-        localStorage.setItem('usuarioActual', this.encryptionService.encrypt(usuarioEncontrado));
-      } else {
-        sessionStorage.setItem('usuarioActual', this.encryptionService.encrypt(usuarioEncontrado));
-      }
+      // Usar el método login del AuthService que maneja el cifrado
+      this.authService.login(usuarioEncontrado, this.usuario.recordar);
 
       alert('Bienvenido ' + usuarioEncontrado.nombre);
       // Redirigir al home
