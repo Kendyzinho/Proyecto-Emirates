@@ -1,1 +1,63 @@
-<p>profile-view works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+          <h3 class="mb-0">Mi Perfil</h3>
+        </div>
+        <div class="card-body" *ngIf="currentUser">
+          <!-- Avatar / Icono de usuario -->
+          <div class="text-center mb-4">
+            <div class="avatar-circle bg-danger text-white">
+              <h1 class="mb-0">{{currentUser.nombre?.charAt(0)}}{{currentUser.apellido?.charAt(0)}}</h1>
+            </div>
+          </div>
+
+          <!-- Información del usuario -->
+          <div class="profile-info">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <strong>Nombre:</strong>
+              </div>
+              <div class="col-md-8">
+                {{currentUser.nombre}}
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <strong>Apellido:</strong>
+              </div>
+              <div class="col-md-8">
+                {{currentUser.apellido}}
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <strong>Email:</strong>
+              </div>
+              <div class="col-md-8">
+                {{currentUser.email}}
+              </div>
+            </div>
+
+          <!-- Botones de acción -->
+          <div class="d-flex gap-2 mt-4">
+            <button class="btn btn-danger" (click)="editProfile()">
+              Editar Perfil
+            </button>
+            <button class="btn btn-outline-secondary" (click)="goBack()">
+              Volver
+            </button>
+          </div>
+        </div>
+
+        <!-- Mensaje si no hay usuario -->
+        <div class="card-body text-center" *ngIf="!currentUser">
+          <p>Cargando información del perfil...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

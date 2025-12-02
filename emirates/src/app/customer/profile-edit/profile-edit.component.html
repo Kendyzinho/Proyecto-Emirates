@@ -1,1 +1,79 @@
-<p>profile-edit works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+          <h3 class="mb-0">Editar Perfil</h3>
+        </div>
+        <div class="card-body" *ngIf="currentUser">
+          <form #profileForm="ngForm">
+            <!-- Nombre -->
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nombre"
+                name="nombre"
+                [(ngModel)]="editedUser.nombre"
+                required
+              >
+            </div>
+
+            <!-- Apellido -->
+            <div class="mb-3">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input
+                type="text"
+                class="form-control"
+                id="apellido"
+                name="apellido"
+                [(ngModel)]="editedUser.apellido"
+                required
+              >
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                [disabled]="true"
+                class="form-control"
+                id="email"
+                name="email"
+                [(ngModel)]="editedUser.email"
+                required
+              >
+            </div>
+
+
+            <!-- Botones -->
+            <div class="d-flex gap-2">
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="saveChanges()"
+                [disabled]="!profileForm.valid"
+              >
+                Guardar Cambios
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                (click)="cancel()"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Mensaje si no hay usuario -->
+        <div class="card-body text-center" *ngIf="!currentUser">
+          <p>Cargando información...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

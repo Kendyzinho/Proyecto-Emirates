@@ -11,6 +11,8 @@ export class HeaderComponent implements OnInit {
   showFlights = false;
   isLoggedIn = false;
   currentUser: any;
+  isAdmin = false;
+  isCliente = false;
 
   cities = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman'];
 
@@ -20,6 +22,9 @@ export class HeaderComponent implements OnInit {
     this.authService.currentUser.subscribe(user => {
       this.isLoggedIn = !!user;
       this.currentUser = user;
+      // Actualizar roles
+      this.isAdmin = user && user.rol === 'admin';
+      this.isCliente = user && user.rol === 'cliente';
     });
   }
 

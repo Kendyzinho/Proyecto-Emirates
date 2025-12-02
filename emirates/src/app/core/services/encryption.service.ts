@@ -7,7 +7,7 @@ import * as CryptoJS from 'crypto-js';
 export class EncryptionService {
 
   // Clave secreta para cifrado (en producción, esto debería estar en variables de entorno)
-  private secretKey = 'Emirates-SecretKey-2024';
+  private secretKey = 'Emirates-SecretKey';
 
   constructor() { }
 

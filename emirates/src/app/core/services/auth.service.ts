@@ -28,6 +28,24 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  // Verificar si el usuario actual es admin
+  public isAdmin(): boolean {
+    const user = this.currentUserSubject.value;
+    return user && user.rol === 'admin';
+  }
+
+  // Verificar si el usuario actual es cliente
+  public isCliente(): boolean {
+    const user = this.currentUserSubject.value;
+    return user && user.rol === 'cliente';
+  }
+
+  // Obtener el rol del usuario actual
+  public getCurrentUserRole(): string | null {
+    const user = this.currentUserSubject.value;
+    return user ? user.rol : null;
+  }
+
   login(user: any, recordar: boolean = false) {
     const encryptedUser = this.encryptionService.encrypt(user);
     if (recordar) {

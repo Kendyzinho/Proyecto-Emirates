@@ -18,12 +18,12 @@ export class RegisterComponent {
 
 
   persona = {
-
     nombre: '',
     apellido: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    rol: 'cliente' // Por defecto todos son clientes
   }
 
   procesarInformacion() {
@@ -59,7 +59,8 @@ export class RegisterComponent {
       nombre: this.persona.nombre,
       apellido: this.persona.apellido,
       email: this.persona.email,
-      password: this.persona.password
+      password: this.persona.password,
+      rol: this.persona.rol
     };
     usuarios.push(nuevoUsuario);
 
@@ -79,7 +80,8 @@ export class RegisterComponent {
       apellido: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      rol: 'cliente'
     };
   }
 }
