@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { EncryptionService } from '../../core/services/encryption.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -6,6 +9,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+
+  constructor(
+    private encryptionService: EncryptionService,
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
 
   persona = {
@@ -16,8 +25,8 @@ export class RegisterComponent {
     password: '',
     confirmPassword: ''
   }
-  
-  procesarInformacion(){
+
+  procesarInformacion() {
 
     // Validar que las contraseñas coincidan
     if (this.persona.password !== this.persona.confirmPassword) {
@@ -26,8 +35,17 @@ export class RegisterComponent {
     }
 
     // Obtener usuarios existentes del localStorage
+    // Obtener usuarios existentes del localStorage
     const usuariosGuardados = localStorage.getItem('usuarios');
-    let usuarios = usuariosGuardados ? JSON.parse(usuariosGuardados) : [];
+    let usuarios = [];
+
+    if (usuariosGuardados) {
+      try {
+        usuarios = this.encryptionService.decrypt(usuariosGuardados) || [];
+      } catch (e) {
+        usuarios = [];
+      }
+    }
 
     // Verificar si el email ya está registrado
     const emailExiste = usuarios.some((u: any) => u.email === this.persona.email);
@@ -46,9 +64,14 @@ export class RegisterComponent {
     usuarios.push(nuevoUsuario);
 
     // Guardar en localStorage
-    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+    localStorage.setItem('usuarios', this.encryptionService.encrypt(usuarios));
     console.log('Usuario registrado exitosamente:', nuevoUsuario);
+
+    // Auto-login
+    this.authService.login(nuevoUsuario);
+
     alert('Registro exitoso');
+    this.router.navigate(['/home']);
 
     // Limpiar formulario
     this.persona = {

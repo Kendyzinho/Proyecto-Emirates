@@ -11,11 +11,14 @@
           <li class="nav-item">
             <a class="nav-link" (click)="toggleFlights()" style="cursor: pointer;">Vuelos</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="!isLoggedIn">
             <a class="nav-link" href="/login">Iniciar sesión</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="!isLoggedIn">
             <a class="nav-link" href="/register">Registrarse</a>
+          </li>
+          <li class="nav-item" *ngIf="isLoggedIn">
+            <a class="nav-link" (click)="logout()" style="cursor: pointer;">Cerrar sesión</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Ayuda</a>

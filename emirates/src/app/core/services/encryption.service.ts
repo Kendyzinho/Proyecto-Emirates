@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as CryptoJS from 'crypto-js'; // da error para que no se preocupen, es algo que estoy probando. ~Bairon
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'

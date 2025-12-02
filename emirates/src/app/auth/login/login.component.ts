@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { EncryptionService } from '../../core/services/encryption.service';
 
 @Component({
   selector: 'app-login',
@@ -8,25 +9,39 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private encryptionService: EncryptionService) { }
 
   usuario = {
     email: '',
     password: '',
     recordar: false
   }
-  
-  procesarLogin(){
-    
+
+  procesarLogin() {
+
     // Obtener usuarios del localStorage
     const usuariosGuardados = localStorage.getItem('usuarios');
-    
+
     if (!usuariosGuardados) {
       alert('No hay usuarios registrados');
       return;
     }
 
-    const usuarios = JSON.parse(usuariosGuardados);
+    let usuarios = [];
+    try {
+      usuarios = this.encryptionService.decrypt(usuariosGuardados);
+      if (!usuarios) {
+        // Fallback por si acaso falla o es data vieja no encriptada (opcional, pero mejor prevenir)
+        try {
+          usuarios = JSON.parse(usuariosGuardados);
+        } catch (e) {
+          usuarios = [];
+        }
+      }
+    } catch (error) {
+      console.error('Error al descifrar usuarios', error);
+      usuarios = [];
+    }
 
     // Buscar usuarios con emails y passwords coincidentes
     const usuarioEncontrado = usuarios.find((u: any) =>
@@ -40,9 +55,9 @@ export class LoginComponent {
 
       // Guardar sesión si marcó "recordar"
       if (this.usuario.recordar) {
-        localStorage.setItem('usuarioActual', JSON.stringify(usuarioEncontrado));
+        localStorage.setItem('usuarioActual', this.encryptionService.encrypt(usuarioEncontrado));
       } else {
-        sessionStorage.setItem('usuarioActual', JSON.stringify(usuarioEncontrado));
+        sessionStorage.setItem('usuarioActual', this.encryptionService.encrypt(usuarioEncontrado));
       }
 
       alert('Bienvenido ' + usuarioEncontrado.nombre);
@@ -52,6 +67,6 @@ export class LoginComponent {
       // Login fallido
       alert('Email o contraseña incorrectos');
     }
- }
+  }
 
 }
