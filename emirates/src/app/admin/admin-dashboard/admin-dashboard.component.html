@@ -1,1 +1,43 @@
-<p>admin-dashboard works!</p>
+<div class="admin-dashboard container mt-4">
+
+  <h1 class="dashboard-title">Panel de Administración</h1>
+  <p class="dashboard-subtitle">Bienvenido al panel administrativo de Emirates</p>
+
+  <div class="row mt-4">
+
+    <!-- lista de vuelos -->
+    <div class="col-md-4">
+      <div class="card admin-card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Vuelos</h5>
+          <p class="card-text">Gestiona todos los vuelos disponibles.</p>
+          <a routerLink="/admin/flights" class="btn btn-danger w-100">Ver Vuelos</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- agregar vuelo -->
+    <div class="col-md-4">
+      <div class="card admin-card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Agregar Vuelo</h5>
+          <p class="card-text">Crea un nuevo vuelo en el sistema.</p>
+          <a routerLink="/admin/flights/add" class="btn btn-danger w-100">Agregar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- perfil admin -->
+    <div class="col-md-4">
+      <div class="card admin-card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Mi Cuenta</h5>
+          <p class="card-text">Ver o editar información personal.</p>
+          <a routerLink="/customer/profile" class="btn btn-danger w-100">Perfil</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

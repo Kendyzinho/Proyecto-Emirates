@@ -28,14 +28,19 @@ export class LoginComponent {
       // Login exitoso
       console.log('Login exitoso:', usuarioEncontrado);
 
-      // Usar el método login del AuthService que maneja el cifrado
+      // Guardar sesión
       this.authService.login(usuarioEncontrado, this.usuario.recordar);
 
       alert('Bienvenido ' + usuarioEncontrado.nombre);
-      // Redirigir al home
-      this.router.navigate(['/home']);
+
+      //Redirección por rol
+      if (usuarioEncontrado.rol === 'admin') {
+        this.router.navigate(['/admin/dashboard']);
+      } else {
+        this.router.navigate(['/customer/dashboard']);
+      }
+
     } else {
-      // Login fallido
       alert('Email o contraseña incorrectos');
     }
   }
