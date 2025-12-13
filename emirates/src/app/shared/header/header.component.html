@@ -25,10 +25,7 @@
             <a class="nav-link" href="/admin/dashboard">Panel Admin</a>
           </li>
 
-          <!-- Opciones para CLIENTE -->
-          <li class="nav-item" *ngIf="isCliente">
-            <a class="nav-link" href="/customer/profile">Mi Cuenta</a>
-          </li>
+    
           <li class="nav-item" *ngIf="isCliente">
             <a class="nav-link position-relative" (click)="toggleCart()" style="cursor: pointer;">
               Carrito
