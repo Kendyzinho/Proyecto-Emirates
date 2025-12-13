@@ -112,6 +112,7 @@ export class AuthService {
     }
 
     const adminExiste = usuarios.some(u => u.rol === 'admin');
+    const clienteExiste = usuarios.some(u => u.rol === 'cliente');
 
     if (!adminExiste) {
       const adminDefault = {
@@ -128,6 +129,30 @@ export class AuthService {
 
       console.log('✔ Administrador creado por defecto:', adminDefault);
     }
+
+    if (!clienteExiste) {
+      const clientesDefault = [
+        {
+          nombre: 'Juan',
+          apellido: 'Pérez',
+          email: 'cliente1@email.com',
+          password: 'cliente123',
+          rol: 'cliente'
+        },
+        {
+          nombre: 'María',
+          apellido: 'García',
+          email: 'cliente2@email.com',
+          password: 'cliente123',
+          rol: 'cliente'
+        }
+      ];
+
+      usuarios.push(...clientesDefault);
+      console.log('✔ Clientes creados por defecto:', clientesDefault);
+    }
+
+    localStorage.setItem('usuarios', this.encryptionService.encrypt(usuarios));
   }
   
 }
