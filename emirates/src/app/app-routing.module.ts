@@ -20,6 +20,7 @@ import { ProfileViewComponent } from './customer/profile-view/profile-view.compo
 import { ProfileEditComponent } from './customer/profile-edit/profile-edit.component';
 import { CartComponent } from './customer/cart/cart.component';
 import { CheckoutComponent } from './customer/checkout/checkout.component';
+import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
 
 const routes: Routes = [
   // Rutas públicas
@@ -33,6 +34,7 @@ const routes: Routes = [
   {
     path: 'admin',
     canActivate: [AdminGuard],
+    component: AdminLayoutComponent,
     children: [
       {path: 'dashboard', component: AdminDashboardComponent},
       {path: 'flights', component: AdminFlightsListComponent},

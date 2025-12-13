@@ -21,6 +21,9 @@ import { AdminFlightsListComponent } from './admin/admin-flights-list/admin-flig
 import { AdminFlightAddComponent } from './admin/admin-flight-add/admin-flight-add.component';
 import { AdminFlightEditComponent } from './admin/admin-flight-edit/admin-flight-edit.component';
 import { FormsModule } from '@angular/forms';
+import { AdminHeaderComponent } from './admin/admin-header/admin-header.component';
+import { AdminSidebarComponent } from './admin/admin-sidebar/admin-sidebar.component';
+import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,10 @@ import { FormsModule } from '@angular/forms';
     AdminDashboardComponent,
     AdminFlightsListComponent,
     AdminFlightAddComponent,
-    AdminFlightEditComponent
+    AdminFlightEditComponent,
+    AdminHeaderComponent,
+    AdminSidebarComponent,
+    AdminLayoutComponent
   ],
   imports: [
     BrowserModule,
