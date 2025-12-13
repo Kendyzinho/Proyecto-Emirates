@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { CartService } from '../../core/services/cart.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,15 +9,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  showCart = false;
-  showFlights = false;
-  isLoggedIn = false;
-  currentUser: any;
-  isAdmin = false;
-  isCliente = false;
-  cartItemCount = 0;
+  showCart: boolean = false;
+  showFlights: boolean = false;
+  showProfileMenu: boolean = false;
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
+  isCliente: boolean = false;
+  currentUser: any = null;
+  cartItemCount: number = 0;
 
-  cities = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman'];
+  cities = ['Dubai', 'Abu Dhabi', 'Doha', 'Delhi'];
 
   constructor(
     private authService: AuthService,
@@ -25,14 +26,13 @@ export class HeaderComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // Suscribirse al Observable del usuario
     this.authService.currentUser.subscribe(user => {
-      this.isLoggedIn = !!user;
       this.currentUser = user;
-      // Actualizar roles
-      this.isAdmin = user && user.rol === 'admin';
-      this.isCliente = user && user.rol === 'cliente';
+      this.isLoggedIn = !!user;
+      this.isAdmin = this.authService.isAdmin();
+      this.isCliente = this.authService.isCliente();
     });
 
     // Suscribirse al Observable del carrito para actualizar el badge
@@ -41,18 +41,33 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  toggleCart() {
+  toggleFlights(): void {
+    this.showFlights = !this.showFlights;
+  }
+
+  toggleCart(): void {
     // Navegar al carrito en lugar de solo mostrar sidebar
     if (this.isCliente) {
       this.router.navigate(['/customer/cart']);
     }
   }
 
-  toggleFlights() {
-    this.showFlights = !this.showFlights;
+  toggleProfileMenu(): void {
+    this.showProfileMenu = !this.showProfileMenu;
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
+    this.showProfileMenu = false;
+    this.router.navigate(['/login']);
   }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: any): void {
+    const profileDropdown = event.target.closest('.profile-dropdown');
+    if (!profileDropdown && this.showProfileMenu) {
+      this.showProfileMenu = false;
+    }
+  }
+
 }

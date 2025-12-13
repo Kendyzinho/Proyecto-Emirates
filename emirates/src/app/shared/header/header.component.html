@@ -11,6 +11,7 @@
           <li class="nav-item">
             <a class="nav-link" (click)="toggleFlights()" style="cursor: pointer;">Vuelos</a>
           </li>
+
           <!-- Opciones cuando NO está logueado -->
           <li class="nav-item" *ngIf="!isLoggedIn">
             <a class="nav-link" href="/login">Iniciar sesión</a>
@@ -36,14 +37,29 @@
               </span>
             </a>
           </li>
-          
-          <!-- Cerrar sesión (visible para todos los logueados) -->
-          <li class="nav-item" *ngIf="isLoggedIn">
-            <a class="nav-link" (click)="logout()" style="cursor: pointer;">Cerrar sesión</a>
-          </li>
 
           <li class="nav-item">
             <a class="nav-link" href="#">Ayuda</a>
+          </li>
+
+          <!-- Foto de perfil con dropdown (visible para logueados) -->
+          <li class="nav-item profile-dropdown" *ngIf="isLoggedIn && currentUser">
+            <img 
+              [src]="currentUser.foto || 'assets/default-user.png'" 
+              alt="Perfil" 
+              class="profile-pic"
+              (click)="toggleProfileMenu()"
+              title="{{currentUser.nombre}} {{currentUser.apellido}}"
+            >
+            <!-- Menú dropdown -->
+            <div class="profile-menu" *ngIf="showProfileMenu">
+              <a href="/customer/profile" class="profile-menu-item">
+                <i class="bi bi-person"></i> Mi Cuenta
+              </a>
+              <a (click)="logout()" class="profile-menu-item" style="cursor: pointer;">
+                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+              </a>
+            </div>
           </li>
         </ul>
       </div>

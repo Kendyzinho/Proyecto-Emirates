@@ -9,7 +9,10 @@ import { AuthService } from '../../core/services/auth.service';
 })
 export class LoginComponent {
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   usuario = {
     email: '',
@@ -18,26 +21,23 @@ export class LoginComponent {
   }
 
   procesarLogin() {
-    // Validar credenciales usando el AuthService
     const usuarioEncontrado = this.authService.validarCredenciales(
       this.usuario.email,
       this.usuario.password
     );
 
     if (usuarioEncontrado) {
-      // Login exitoso
       console.log('Login exitoso:', usuarioEncontrado);
-
-      // Usar el método login del AuthService que maneja el cifrado
       this.authService.login(usuarioEncontrado, this.usuario.recordar);
-
       alert('Bienvenido ' + usuarioEncontrado.nombre);
-      // Redirigir al home
-      this.router.navigate(['/home']);
+
+      if (usuarioEncontrado.rol === 'admin') {
+        this.router.navigate(['/admin/dashboard']);
+      } else if (usuarioEncontrado.rol === 'cliente') {
+        this.router.navigate(['/home']);
+      }
     } else {
-      // Login fallido
       alert('Email o contraseña incorrectos');
     }
   }
-
 }

@@ -33,6 +33,28 @@
               >
             </div>
 
+            <!-- Foto de Perfil -->
+            <div class="mb-3">
+              <label for="foto" class="form-label">Foto de Perfil</label>
+              <div class="d-flex gap-3 align-items-center">
+                <img 
+                  *ngIf="editedUser.foto" 
+                  [src]="editedUser.foto" 
+                  alt="Perfil" 
+                  class="profile-preview"
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="foto"
+                  name="foto"
+                  accept="image/*"
+                  (change)="onFotoChange($event)"
+                >
+              </div>
+              <small class="text-muted d-block mt-2">Formatos soportados: JPG, PNG, GIF</small>
+            </div>
+
             <!-- Email -->
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
