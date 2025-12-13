@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
@@ -7,36 +8,56 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  showCart = false;
-  showFlights = false;
-  isLoggedIn = false;
-  currentUser: any;
-  isAdmin = false;
-  isCliente = false;
 
-  cities = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman'];
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
+  isCliente: boolean = false;
+  currentUser: any = null;
 
-  constructor(private authService: AuthService) { }
+  showFlights: boolean = false;
+  showCart: boolean = false;
+  showProfileMenu: boolean = false;
 
-  ngOnInit() {
+  cities = ['Dubai', 'Abu Dhabi', 'Doha', 'Delhi'];
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
     this.authService.currentUser.subscribe(user => {
-      this.isLoggedIn = !!user;
       this.currentUser = user;
-      // Actualizar roles
-      this.isAdmin = user && user.rol === 'admin';
-      this.isCliente = user && user.rol === 'cliente';
+      this.isLoggedIn = !!user;
+      this.isAdmin = this.authService.isAdmin();
+      this.isCliente = this.authService.isCliente();
     });
-  }
-
-  toggleCart() {
-    this.showCart = !this.showCart;
   }
 
   toggleFlights() {
     this.showFlights = !this.showFlights;
   }
 
+  toggleCart() {
+    this.showCart = !this.showCart;
+  }
+
+  toggleProfileMenu() {
+    this.showProfileMenu = !this.showProfileMenu;
+  }
+
   logout() {
     this.authService.logout();
+    this.showProfileMenu = false;
+    this.router.navigate(['/login']);
   }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: any) {
+    const profileDropdown = event.target.closest('.profile-dropdown');
+    if (!profileDropdown && this.showProfileMenu) {
+      this.showProfileMenu = false;
+    }
+  }
+
 }

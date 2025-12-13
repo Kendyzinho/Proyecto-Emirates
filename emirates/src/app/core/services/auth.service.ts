@@ -120,7 +120,8 @@ export class AuthService {
         apellido: 'Valdivia',
         email: 'admin@email.com',
         password: 'admin123',
-        rol: 'admin'
+        rol: 'admin',
+        foto: 'assets/default-admin.png'
       };
 
       usuarios.push(adminDefault);
@@ -137,14 +138,16 @@ export class AuthService {
           apellido: 'Pérez',
           email: 'cliente1@email.com',
           password: 'cliente123',
-          rol: 'cliente'
+          rol: 'cliente',
+          foto: 'assets/default-user.png'
         },
         {
           nombre: 'María',
           apellido: 'García',
           email: 'cliente2@email.com',
           password: 'cliente123',
-          rol: 'cliente'
+          rol: 'cliente',
+          foto: 'assets/default-user.png'
         }
       ];
 
