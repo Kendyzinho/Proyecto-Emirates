@@ -29,7 +29,12 @@
             <a class="nav-link" href="/customer/profile">Mi Cuenta</a>
           </li>
           <li class="nav-item" *ngIf="isCliente">
-            <a class="nav-link" (click)="toggleCart()" style="cursor: pointer;">Carrito</a>
+            <a class="nav-link position-relative" (click)="toggleCart()" style="cursor: pointer;">
+              Carrito
+              <span class="badge bg-light text-danger rounded-pill ms-1" *ngIf="cartItemCount > 0">
+                {{cartItemCount}}
+              </span>
+            </a>
           </li>
           
           <!-- Cerrar sesión (visible para todos los logueados) -->

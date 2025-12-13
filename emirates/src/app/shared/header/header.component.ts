@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
+import { CartService } from '../../core/services/cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,12 +15,18 @@ export class HeaderComponent implements OnInit {
   currentUser: any;
   isAdmin = false;
   isCliente = false;
+  cartItemCount = 0;
 
   cities = ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman'];
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private cartService: CartService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    // Suscribirse al Observable del usuario
     this.authService.currentUser.subscribe(user => {
       this.isLoggedIn = !!user;
       this.currentUser = user;
@@ -26,10 +34,18 @@ export class HeaderComponent implements OnInit {
       this.isAdmin = user && user.rol === 'admin';
       this.isCliente = user && user.rol === 'cliente';
     });
+
+    // Suscribirse al Observable del carrito para actualizar el badge
+    this.cartService.cartItems.subscribe(items => {
+      this.cartItemCount = this.cartService.getItemCount();
+    });
   }
 
   toggleCart() {
-    this.showCart = !this.showCart;
+    // Navegar al carrito en lugar de solo mostrar sidebar
+    if (this.isCliente) {
+      this.router.navigate(['/customer/cart']);
+    }
   }
 
   toggleFlights() {

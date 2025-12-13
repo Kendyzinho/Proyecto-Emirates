@@ -1,1 +1,145 @@
-<p>checkout works!</p>
+<app-header></app-header>
+
+<main class="checkout-content">
+  <div class="container py-5">
+    <h1 class="text-center mb-4">Finalizar Compra</h1>
+
+    <div class="row">
+      <!-- Formulario de datos del pasajero -->
+      <div class="col-lg-7 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">Datos del Pasajero Principal</h4>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Nombre *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="pasajeroData.nombre"
+                    name="nombre"
+                    required
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Apellido *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="pasajeroData.apellido"
+                    name="apellido"
+                    required
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Número de Pasaporte *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="pasajeroData.pasaporte"
+                    name="pasaporte"
+                    placeholder="Ej: AB123456"
+                    required
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Teléfono *</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    [(ngModel)]="pasajeroData.telefono"
+                    name="telefono"
+                    placeholder="Ej: +971 50 123 4567"
+                    required
+                  >
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Email *</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    [(ngModel)]="pasajeroData.email"
+                    name="email"
+                    required
+                  >
+                </div>
+              </div>
+            </form>
+            <div class="mt-3">
+              <small class="text-muted">* Todos los campos son obligatorios</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumen del pedido -->
+      <div class="col-lg-5">
+        <div class="card shadow-sm">
+          <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">Resumen de Compra</h4>
+          </div>
+          <div class="card-body">
+            <!-- Lista de vuelos -->
+            <div class="mb-3" *ngFor="let item of cartItems">
+              <div class="d-flex justify-content-between align-items-start border-bottom pb-2 mb-2">
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">{{item.vuelo.origen}} → {{item.vuelo.destino}}</h6>
+                  <small class="text-muted d-block">Fecha: {{item.vuelo.fecha}}</small>
+                  <small class="text-muted d-block">Hora: {{item.vuelo.hora}}</small>
+                  <small class="text-muted d-block">Pasajeros: {{item.pasajeros}}</small>
+                </div>
+                <div class="text-end">
+                  <strong>${{item.subtotal}}</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total -->
+            <div class="border-top pt-3 mt-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span>Subtotal:</span>
+                <span>${{total}}</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span>Impuestos y tasas:</span>
+                <span>Incluido</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center border-top pt-2">
+                <strong class="h5 mb-0">Total:</strong>
+                <strong class="h5 mb-0 text-danger">${{total}}</strong>
+              </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-grid gap-2 mt-4">
+              <button
+                class="btn btn-danger btn-lg"
+                (click)="confirmarCompra()"
+              >
+                Confirmar Compra
+              </button>
+              <button
+                class="btn btn-outline-secondary"
+                (click)="volverAlCarrito()"
+              >
+                Volver al Carrito
+              </button>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="alert alert-info mt-3 mb-0">
+              <small>
+                <strong>Nota:</strong> Al confirmar tu compra, recibirás un correo electrónico con los detalles de tu reserva.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<app-footer></app-footer>

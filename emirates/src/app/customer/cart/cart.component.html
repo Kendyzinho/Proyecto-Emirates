@@ -1,1 +1,113 @@
-<p>cart works!</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+          <h3 class="mb-0">Mi Carrito</h3>
+          <button class="btn btn-sm btn-light" (click)="clearCart()" *ngIf="cartItems.length > 0">
+            Vaciar Carrito
+          </button>
+        </div>
+
+        <div class="card-body">
+          <!-- Carrito vacío -->
+          <div *ngIf="cartItems.length === 0" class="text-center py-5">
+            <h4 class="text-muted">Tu carrito está vacío</h4>
+            <p class="text-muted">Agrega vuelos para comenzar tu reserva</p>
+            <button class="btn btn-danger mt-3" (click)="continueShopping()">
+              Buscar Vuelos
+            </button>
+          </div>
+
+          <!-- Lista de items -->
+          <div *ngIf="cartItems.length > 0">
+            <div class="cart-item mb-3" *ngFor="let item of cartItems">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <!-- Información del vuelo -->
+                    <div class="col-md-6">
+                      <h5>{{item.vuelo.origen}} → {{item.vuelo.destino}}</h5>
+                      <p class="mb-1 text-muted">
+                        <strong>Fecha:</strong> {{item.vuelo.fecha}} |
+                        <strong>Hora:</strong> {{item.vuelo.hora}}
+                      </p>
+                      <p class="mb-1 text-muted">
+                        <strong>Duración:</strong> {{item.vuelo.duracion}} |
+                        <strong>Aerolínea:</strong> {{item.vuelo.aerolinea}}
+                      </p>
+                      <p class="mb-0">
+                        <strong>Precio por pasajero:</strong> ${{item.vuelo.precio}}
+                      </p>
+                    </div>
+
+                    <!-- Cantidad de pasajeros -->
+                    <div class="col-md-3">
+                      <label class="form-label">Pasajeros:</label>
+                      <div class="input-group">
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          (click)="updateQuantity(item.id, item.pasajeros - 1)"
+                          [disabled]="item.pasajeros <= 1"
+                        >
+                          -
+                        </button>
+                        <input
+                          type="number"
+                          class="form-control text-center"
+                          [(ngModel)]="item.pasajeros"
+                          (change)="updateQuantity(item.id, item.pasajeros)"
+                          min="1"
+                        >
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          (click)="updateQuantity(item.id, item.pasajeros + 1)"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Subtotal y acciones -->
+                    <div class="col-md-3 text-end">
+                      <h4 class="text-danger mb-3">${{item.subtotal}}</h4>
+                      <button
+                        class="btn btn-sm btn-outline-danger"
+                        (click)="removeItem(item.id)"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Resumen del total -->
+            <div class="card bg-light mt-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h5>Total de items: {{cartItems.length}}</h5>
+                    <p class="mb-0">Total de pasajeros: {{cartService.getItemCount()}}</p>
+                  </div>
+                  <div class="col-md-4 text-end">
+                    <h3 class="text-danger mb-3">Total: ${{total}}</h3>
+                    <button class="btn btn-danger btn-lg w-100" (click)="goToCheckout()">
+                      Proceder al Pago
+                    </button>
+                    <button class="btn btn-outline-secondary w-100 mt-2" (click)="continueShopping()">
+                      Continuar Comprando
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

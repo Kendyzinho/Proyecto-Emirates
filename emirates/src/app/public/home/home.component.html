@@ -11,26 +11,94 @@
         <div class="row g-3">
           <div class="col-md-6 col-lg-3">
             <label class="form-label">Origen</label>
-            <input type="text" class="form-control" placeholder="Ciudad de salida">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Ej: Dubai, Abu Dhabi..."
+              [(ngModel)]="searchCriteria.origen"
+              list="ciudadesOrigenList"
+            >
+            <datalist id="ciudadesOrigenList">
+              <option *ngFor="let ciudad of ciudadesOrigen" [value]="ciudad">
+            </datalist>
           </div>
 
           <div class="col-md-6 col-lg-3">
             <label class="form-label">Destino</label>
-            <input type="text" class="form-control" placeholder="Ciudad de llegada">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Ej: Madrid, Londres..."
+              [(ngModel)]="searchCriteria.destino"
+              list="ciudadesDestinoList"
+            >
+            <datalist id="ciudadesDestinoList">
+              <option *ngFor="let ciudad of ciudadesDestino" [value]="ciudad">
+            </datalist>
           </div>
 
           <div class="col-md-6 col-lg-2">
             <label class="form-label">Fecha de salida</label>
-            <input type="date" class="form-control">
+            <input type="date" class="form-control" [(ngModel)]="searchCriteria.fechaSalida">
           </div>
 
           <div class="col-md-6 col-lg-2">
             <label class="form-label">Fecha de regreso</label>
-            <input type="date" class="form-control">
+            <input type="date" class="form-control" [(ngModel)]="searchCriteria.fechaRegreso">
           </div>
 
-          <div class="col-12 col-lg-2 d-flex align-items-end">
-            <button class="btn btn-danger w-100">Buscar vuelos</button>
+          <div class="col-12 col-lg-2 d-flex align-items-end gap-2">
+            <button class="btn btn-danger flex-fill" (click)="buscarVuelos()">Buscar</button>
+            <button class="btn btn-outline-secondary" (click)="limpiarBusqueda()" *ngIf="searchPerformed" title="Limpiar búsqueda">
+              ✕
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de vuelos disponibles -->
+    <div class="container mt-5">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">
+          <span *ngIf="!searchPerformed">Todos los Vuelos Disponibles</span>
+          <span *ngIf="searchPerformed">Resultados de Búsqueda ({{vuelosDisponibles.length}})</span>
+        </h2>
+      </div>
+
+      <!-- Mensaje si no hay vuelos -->
+      <div *ngIf="vuelosDisponibles.length === 0" class="alert alert-info text-center">
+        <h4>No se encontraron vuelos</h4>
+        <p>Intenta con otros criterios de búsqueda</p>
+        <button class="btn btn-danger" (click)="limpiarBusqueda()">Ver todos los vuelos</button>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let vuelo of vuelosDisponibles">
+          <div class="card h-100 shadow-sm">
+            <div class="card-header bg-danger text-white">
+              <h5 class="mb-0">{{vuelo.origen}} → {{vuelo.destino}}</h5>
+            </div>
+            <div class="card-body">
+              <p class="mb-2"><strong>Fecha:</strong> {{vuelo.fecha}}</p>
+              <p class="mb-2"><strong>Hora:</strong> {{vuelo.hora}}</p>
+              <p class="mb-2"><strong>Duración:</strong> {{vuelo.duracion}}</p>
+              <p class="mb-2"><strong>Aerolínea:</strong> {{vuelo.aerolinea}}</p>
+              <p class="mb-2"><strong>Disponibles:</strong> {{vuelo.disponibles}} asientos</p>
+              <h4 class="text-danger mt-3">${{vuelo.precio}} <small class="text-muted">por pasajero</small></h4>
+            </div>
+            <div class="card-footer bg-white">
+              <button
+                class="btn w-100"
+                [class.btn-danger]="!isInCart(vuelo.id)"
+                [class.btn-secondary]="isInCart(vuelo.id)"
+                (click)="addToCart(vuelo)"
+                [disabled]="isInCart(vuelo.id)"
+              >
+                <span *ngIf="!isInCart(vuelo.id)">Agregar al Carrito</span>
+                <span *ngIf="isInCart(vuelo.id)">✓ Ya en el Carrito</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
