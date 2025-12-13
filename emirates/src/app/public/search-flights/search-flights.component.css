@@ -1,0 +1,88 @@
+.flights-search-content {
+  min-height: calc(100vh - 200px);
+}
+
+.hover-shadow {
+  transition: all 0.3s ease;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-2px);
+}
+
+.card {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+}
+
+.bi-airplane {
+  transform: rotate(45deg);
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Estilos para el modal */
+.modal {
+  z-index: 1050;
+}
+
+.modal.show {
+  opacity: 1;
+}
+
+.modal-backdrop {
+  z-index: 1040;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-backdrop.show {
+  opacity: 1;
+}
+
+/* Estilos para las filas de detalles */
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 500;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+}
+
+.detail-value {
+  font-weight: 600;
+  color: #212529;
+  text-align: right;
+}
+
+.pilot-avatar {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animación del modal */
+.modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out;
+  transform: translate(0, -50px);
+}
+
+.modal.show .modal-dialog {
+  transform: none;
+}

@@ -7,6 +7,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AdminGuard } from './core/guards/admin.guard';
+import { SearchFlightsComponent } from './public/search-flights/search-flights.component';
 
 // Importar componentes de Admin
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
@@ -24,6 +25,7 @@ import { CheckoutComponent } from './customer/checkout/checkout.component';
 const routes: Routes = [
   // Rutas públicas
   {path: 'home', component: HomeComponent},
+  {path: 'flights', component: SearchFlightsComponent},
   {path: 'header', component: HeaderComponent},
   {path: 'footer', component: FooterComponent},
   {path: 'register', component: RegisterComponent},

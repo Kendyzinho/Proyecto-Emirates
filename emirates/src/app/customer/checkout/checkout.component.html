@@ -52,7 +52,9 @@
                     class="form-control"
                     [(ngModel)]="pasajeroData.telefono"
                     name="telefono"
-                    placeholder="Ej: +971 50 123 4567"
+                    placeholder="Ej: +971501234567"
+                    pattern="[\d\s\-\+]+"
+                    title="Solo números, espacios, guiones o el símbolo +"
                     required
                   >
                 </div>

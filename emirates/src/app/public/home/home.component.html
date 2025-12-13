@@ -1,109 +1,233 @@
 <app-header></app-header>
 
 <main class="home-content">
-  <div class="container py-5">
-    <div class="text-center mb-4">
-      <h1 class="display-4 fw-bold">Encuentra tu próximo vuelo</h1>
-    </div>
-
-    <div class="card shadow-lg border-0">
-      <div class="card-body p-4">
-        <div class="row g-3">
-          <div class="col-md-6 col-lg-3">
-            <label class="form-label">Origen</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Ej: Dubai, Abu Dhabi..."
-              [(ngModel)]="searchCriteria.origen"
-              list="ciudadesOrigenList"
-            >
-            <datalist id="ciudadesOrigenList">
-              <option *ngFor="let ciudad of ciudadesOrigen" [value]="ciudad">
-            </datalist>
-          </div>
-
-          <div class="col-md-6 col-lg-3">
-            <label class="form-label">Destino</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Ej: Madrid, Londres..."
-              [(ngModel)]="searchCriteria.destino"
-              list="ciudadesDestinoList"
-            >
-            <datalist id="ciudadesDestinoList">
-              <option *ngFor="let ciudad of ciudadesDestino" [value]="ciudad">
-            </datalist>
-          </div>
-
-          <div class="col-md-6 col-lg-2">
-            <label class="form-label">Fecha de salida</label>
-            <input type="date" class="form-control" [(ngModel)]="searchCriteria.fechaSalida">
-          </div>
-
-          <div class="col-md-6 col-lg-2">
-            <label class="form-label">Fecha de regreso</label>
-            <input type="date" class="form-control" [(ngModel)]="searchCriteria.fechaRegreso">
-          </div>
-
-          <div class="col-12 col-lg-2 d-flex align-items-end gap-2">
-            <button class="btn btn-danger flex-fill" (click)="buscarVuelos()">Buscar</button>
-            <button class="btn btn-outline-secondary" (click)="limpiarBusqueda()" *ngIf="searchPerformed" title="Limpiar búsqueda">
-              ✕
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sección de vuelos disponibles -->
-    <div class="container mt-5">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">
-          <span *ngIf="!searchPerformed">Todos los Vuelos Disponibles</span>
-          <span *ngIf="searchPerformed">Resultados de Búsqueda ({{vuelosDisponibles.length}})</span>
-        </h2>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container hero-container">
+      <div class="hero-content text-center text-white">
+        <h1 class="hero-title">Vuela a tus Destinos Soñados</h1>
+        <p class="hero-subtitle">Descubre el mundo con Emirates - Comodidad, Lujo y Destinos Increíbles</p>
       </div>
 
-      <!-- Mensaje si no hay vuelos -->
-      <div *ngIf="vuelosDisponibles.length === 0" class="alert alert-info text-center">
-        <h4>No se encontraron vuelos</h4>
-        <p>Intenta con otros criterios de búsqueda</p>
-        <button class="btn btn-danger" (click)="limpiarBusqueda()">Ver todos los vuelos</button>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let vuelo of vuelosDisponibles">
-          <div class="card h-100 shadow-sm">
-            <div class="card-header bg-danger text-white">
-              <h5 class="mb-0">{{vuelo.origen}} → {{vuelo.destino}}</h5>
-            </div>
-            <div class="card-body">
-              <p class="mb-2"><strong>Fecha:</strong> {{vuelo.fecha}}</p>
-              <p class="mb-2"><strong>Hora:</strong> {{vuelo.hora}}</p>
-              <p class="mb-2"><strong>Duración:</strong> {{vuelo.duracion}}</p>
-              <p class="mb-2"><strong>Aerolínea:</strong> {{vuelo.aerolinea}}</p>
-              <p class="mb-2"><strong>Disponibles:</strong> {{vuelo.disponibles}} asientos</p>
-              <h4 class="text-danger mt-3">${{vuelo.precio}} <small class="text-muted">por pasajero</small></h4>
-            </div>
-            <div class="card-footer bg-white">
-              <button
-                class="btn w-100"
-                [class.btn-danger]="!isInCart(vuelo.id)"
-                [class.btn-secondary]="isInCart(vuelo.id)"
-                (click)="addToCart(vuelo)"
-                [disabled]="isInCart(vuelo.id)"
+      <!-- Search Card -->
+      <div class="card search-card shadow-lg border-0">
+        <div class="card-body p-4">
+          <h4 class="text-center mb-4 text-danger">
+            <i class="bi bi-search me-2"></i>Busca tu Vuelo Ideal
+          </h4>
+          <div class="row g-3">
+            <div class="col-md-6 col-lg-3">
+              <label class="form-label fw-bold">
+                <i class="bi bi-geo-alt me-1"></i>Origen
+              </label>
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                placeholder="Ej: Dubai, Abu Dhabi..."
+                [(ngModel)]="searchCriteria.origen"
+                list="ciudadesOrigenList"
               >
-                <span *ngIf="!isInCart(vuelo.id)">Agregar al Carrito</span>
-                <span *ngIf="isInCart(vuelo.id)">✓ Ya en el Carrito</span>
+              <datalist id="ciudadesOrigenList">
+                <option *ngFor="let ciudad of ciudadesOrigen" [value]="ciudad">
+              </datalist>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+              <label class="form-label fw-bold">
+                <i class="bi bi-geo me-1"></i>Destino
+              </label>
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                placeholder="Ej: Madrid, Londres..."
+                [(ngModel)]="searchCriteria.destino"
+                list="ciudadesDestinoList"
+              >
+              <datalist id="ciudadesDestinoList">
+                <option *ngFor="let ciudad of ciudadesDestino" [value]="ciudad">
+              </datalist>
+            </div>
+
+            <div class="col-md-6 col-lg-2">
+              <label class="form-label fw-bold">
+                <i class="bi bi-calendar-check me-1"></i>Salida
+              </label>
+              <input type="date" class="form-control form-control-lg" [(ngModel)]="searchCriteria.fechaSalida">
+            </div>
+
+            <div class="col-md-6 col-lg-2">
+              <label class="form-label fw-bold">
+                <i class="bi bi-calendar-event me-1"></i>Regreso
+              </label>
+              <input type="date" class="form-control form-control-lg" [(ngModel)]="searchCriteria.fechaRegreso">
+            </div>
+
+            <div class="col-12 col-lg-2 d-flex align-items-end">
+              <button class="btn btn-danger btn-lg w-100" (click)="buscarVuelos()">
+                <i class="bi bi-search me-2"></i>Buscar Vuelos
               </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- Featured Destinations Section -->
+  <section class="featured-destinations py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold">Destinos Destacados</h2>
+        <p class="text-muted">Descubre algunos de nuestros destinos más populares</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="destination-card">
+            <div class="destination-image">
+              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800" alt="Dubai">
+              <div class="destination-overlay">
+                <h3>Dubai</h3>
+                <p>Ciudad del futuro</p>
+              </div>
+            </div>
+            <div class="destination-info">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="badge bg-danger">Desde $450</span>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" (click)="buscarVuelos()">
+                  Ver vuelos <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="destination-card">
+            <div class="destination-image">
+              <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800" alt="París">
+              <div class="destination-overlay">
+                <h3>París</h3>
+                <p>La ciudad del amor</p>
+              </div>
+            </div>
+            <div class="destination-info">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="badge bg-danger">Desde $520</span>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" (click)="buscarVuelos()">
+                  Ver vuelos <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="destination-card">
+            <div class="destination-image">
+              <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800" alt="Londres">
+              <div class="destination-overlay">
+                <h3>Londres</h3>
+                <p>Historia y cultura</p>
+              </div>
+            </div>
+            <div class="destination-info">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="badge bg-danger">Desde $480</span>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" (click)="buscarVuelos()">
+                  Ver vuelos <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="destination-card">
+            <div class="destination-image">
+              <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800" alt="Tokio">
+              <div class="destination-overlay">
+                <h3>Tokio</h3>
+                <p>Tradición y tecnología</p>
+              </div>
+            </div>
+            <div class="destination-info">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="badge bg-danger">Desde $720</span>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" (click)="buscarVuelos()">
+                  Ver vuelos <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="destination-card">
+            <div class="destination-image">
+              <img src="https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=800" alt="Nueva York">
+              <div class="destination-overlay">
+                <h3>Nueva York</h3>
+                <p>La gran manzana</p>
+              </div>
+            </div>
+            <div class="destination-info">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="badge bg-danger">Desde $680</span>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" (click)="buscarVuelos()">
+                  Ver vuelos <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="destination-card">
+            <div class="destination-image">
+              <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=800" alt="Sídney">
+              <div class="destination-overlay">
+                <h3>Sídney</h3>
+                <p>Aventura australiana</p>
+              </div>
+            </div>
+            <div class="destination-info">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="badge bg-danger">Desde $890</span>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" (click)="buscarVuelos()">
+                  Ver vuelos <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section py-5 bg-danger text-white">
+    <div class="container text-center">
+      <h2 class="mb-3">¿Listo para tu Próxima Aventura?</h2>
+      <p class="lead mb-4">Explora más de 20 destinos alrededor del mundo con Emirates</p>
+      <button class="btn btn-light btn-lg px-5" (click)="buscarVuelos()">
+        <i class="bi bi-airplane-fill me-2"></i>Ver Todos los Vuelos
+      </button>
+    </div>
+  </section>
 </main>
 
 <app-footer></app-footer>

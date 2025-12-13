@@ -28,9 +28,31 @@ export class CartComponent implements OnInit {
 
   // Actualizar cantidad de pasajeros
   updateQuantity(itemId: string, pasajeros: number) {
-    if (pasajeros > 0) {
-      this.cartService.updatePassengers(itemId, pasajeros);
+    // Encontrar el item en el carrito
+    const item = this.cartItems.find(i => i.id === itemId);
+
+    if (!item) {
+      return;
     }
+
+    // Validar que sea un número positivo
+    if (pasajeros < 1) {
+      alert('Debe haber al menos 1 pasajero');
+      item.pasajeros = 1;
+      this.cartService.updatePassengers(itemId, 1);
+      return;
+    }
+
+    // Validar que no exceda los asientos disponibles
+    if (pasajeros > item.vuelo.disponibles) {
+      alert(`Este vuelo solo tiene ${item.vuelo.disponibles} asientos disponibles`);
+      item.pasajeros = item.vuelo.disponibles;
+      this.cartService.updatePassengers(itemId, item.vuelo.disponibles);
+      return;
+    }
+
+    // Actualizar si todo está bien
+    this.cartService.updatePassengers(itemId, pasajeros);
   }
 
   // Eliminar item del carrito

@@ -59,15 +59,18 @@
                           [(ngModel)]="item.pasajeros"
                           (change)="updateQuantity(item.id, item.pasajeros)"
                           min="1"
+                          [max]="item.vuelo.disponibles"
                         >
                         <button
                           class="btn btn-outline-secondary"
                           type="button"
                           (click)="updateQuantity(item.id, item.pasajeros + 1)"
+                          [disabled]="item.pasajeros >= item.vuelo.disponibles"
                         >
                           +
                         </button>
                       </div>
+                      <small class="text-muted">Máximo: {{item.vuelo.disponibles}} asientos</small>
                     </div>
 
                     <!-- Subtotal y acciones -->

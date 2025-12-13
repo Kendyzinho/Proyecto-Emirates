@@ -8,3 +8,252 @@
   flex: 1;
   background: #f8f9fa;
 }
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  min-height: 600px;
+  background: linear-gradient(135deg, #dc3545 0%, #8b1a26 100%);
+  background-image:
+    linear-gradient(rgba(220, 53, 69, 0.85), rgba(139, 26, 38, 0.85)),
+    url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
+}
+
+.hero-container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content {
+  margin-bottom: 3rem;
+  animation: fadeInDown 1s ease-out;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  font-size: 1.4rem;
+  font-weight: 300;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Search Card */
+.search-card {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  animation: fadeInUp 1s ease-out 0.3s both;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search-card .form-label {
+  color: #495057;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.search-card .form-control {
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.search-card .form-control:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.15);
+}
+
+/* Featured Destinations Section */
+.featured-destinations {
+  background: #f8f9fa;
+}
+
+.destination-card {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  height: 100%;
+}
+
+.destination-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.destination-image {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+}
+
+.destination-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.destination-card:hover .destination-image img {
+  transform: scale(1.1);
+}
+
+.destination-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+  padding: 2rem 1.5rem 1.5rem;
+  color: #fff;
+}
+
+.destination-overlay h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 0.25rem;
+}
+
+.destination-overlay p {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.destination-info {
+  padding: 1rem 1.5rem;
+}
+
+.destination-info .badge {
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+}
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(135deg, #dc3545 0%, #a71d2a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.cta-section::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -5%;
+  width: 400px;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.cta-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-section h2 {
+  font-weight: 700;
+  font-size: 2.5rem;
+}
+
+.cta-section .btn-light {
+  font-weight: 600;
+  border: 2px solid #fff;
+  transition: all 0.3s ease;
+}
+
+.cta-section .btn-light:hover {
+  background: transparent;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero-section {
+    min-height: 500px;
+    background-attachment: scroll;
+  }
+
+  .cta-section h2 {
+    font-size: 2rem;
+  }
+
+  .destination-image {
+    height: 220px;
+  }
+
+  .destination-overlay h3 {
+    font-size: 1.5rem;
+  }
+}

@@ -16,14 +16,26 @@ export class FlightsService {
   // Cargar vuelos desde localStorage
   private cargarVuelos(): void {
     const vuelosGuardados = localStorage.getItem('vuelos');
+    const vuelosDefault = this.getVuelosDefault();
+
     if (vuelosGuardados) {
       try {
-        this.allFlights = this.encryptionService.decrypt(vuelosGuardados) || this.getVuelosDefault();
+        const vuelosDecrypt = this.encryptionService.decrypt(vuelosGuardados);
+
+        // Si el número de vuelos por defecto cambió, actualizar automáticamente
+        if (vuelosDecrypt && vuelosDecrypt.length !== vuelosDefault.length) {
+          console.log('Actualizando vuelos: se detectaron cambios en el catálogo');
+          this.allFlights = vuelosDefault;
+          this.guardarVuelos();
+        } else {
+          this.allFlights = vuelosDecrypt || vuelosDefault;
+        }
       } catch (error) {
-        this.allFlights = this.getVuelosDefault();
+        this.allFlights = vuelosDefault;
+        this.guardarVuelos();
       }
     } else {
-      this.allFlights = this.getVuelosDefault();
+      this.allFlights = vuelosDefault;
       this.guardarVuelos();
     }
   }
@@ -33,9 +45,10 @@ export class FlightsService {
     localStorage.setItem('vuelos', this.encryptionService.encrypt(this.allFlights));
   }
 
-  // Vuelos por defecto con pilotos
+  // Vuelos por defecto con pilotos (6 vuelos de ejemplo)
   private getVuelosDefault(): Flight[] {
     return [
+      // Vuelo 1: Dubai → Madrid
       {
         id: 'vuelo-1',
         origen: 'Dubai',
@@ -111,7 +124,45 @@ export class FlightsService {
           licencia: 'ATPL-2025-004',
           horas_vuelo: 18000
         }
-      }
+      },
+      {
+        id: 'vuelo-5',
+        origen: 'Dubai',
+        destino: 'Barcelona',
+        fecha: '2025-01-16',
+        hora: '08:00',
+        duracion: '7h 45m',
+        precio: 465,
+        aerolinea: 'Emirates',
+        disponibles: 22,
+        piloto: {
+          id: 'piloto-5',
+          nombre: 'Fatima',
+          apellido: 'Al-Hashimi',
+          foto: 'assets/pilotos/piloto-5.jpg',
+          licencia: 'ATPL-2025-005',
+          horas_vuelo: 13500
+        }
+      },
+      {
+        id: 'vuelo-6',
+        origen: 'Dubai',
+        destino: 'Sídney',
+        fecha: '2025-01-23',
+        hora: '20:30',
+        duracion: '13h 45m',
+        precio: 890,
+        aerolinea: 'Emirates',
+        disponibles: 12,
+        piloto: {
+          id: 'piloto-6',
+          nombre: 'James',
+          apellido: 'Wilson',
+          foto: 'assets/pilotos/piloto-6.jpg',
+          licencia: 'ATPL-2025-006',
+          horas_vuelo: 16800
+        }
+      },
     ];
   }
 

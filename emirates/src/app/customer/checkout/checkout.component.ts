@@ -31,18 +31,6 @@ export class CheckoutComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Suscribirse al Observable del carrito
-    this.cartService.cartItems.subscribe(items => {
-      this.cartItems = items;
-      this.total = this.cartService.getTotal();
-
-      // Si el carrito está vacío, redirigir al home
-      if (items.length === 0) {
-        alert('Tu carrito está vacío');
-        this.router.navigate(['/home']);
-      }
-    });
-
     // Suscribirse al Observable del usuario para pre-llenar datos
     this.authService.currentUser.subscribe(user => {
       if (user) {
@@ -52,6 +40,18 @@ export class CheckoutComponent implements OnInit {
         this.pasajeroData.email = user.email;
       }
     });
+
+    // Suscribirse al Observable del carrito
+    this.cartService.cartItems.subscribe(items => {
+      this.cartItems = items;
+      this.total = this.cartService.getTotal();
+    });
+
+    // Verificar si el carrito está vacío al cargar el componente
+    if (this.cartService.cartItemsValue.length === 0) {
+      alert('Tu carrito está vacío');
+      this.router.navigate(['/home']);
+    }
   }
 
   // Confirmar compra
@@ -64,13 +64,23 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
+    // Validar que el teléfono solo contenga números (y opcionalmente +, espacios, guiones)
+    const telefonoRegex = /^[\d\s\-\+]+$/;
+    if (!telefonoRegex.test(this.pasajeroData.telefono)) {
+      alert('El teléfono solo debe contener números, espacios, guiones o el símbolo +');
+      return;
+    }
+
+    // Guardar el total ANTES de limpiar el carrito
+    const totalFinal = this.total;
+
     // Crear objeto de reserva
     const reserva = {
       id: this.generateReservationId(),
       usuario: this.currentUser.email,
       vuelos: this.cartItems,
       pasajero: this.pasajeroData,
-      total: this.total,
+      total: totalFinal,
       fecha: new Date().toISOString(),
       estado: 'confirmada'
     };
@@ -81,8 +91,8 @@ export class CheckoutComponent implements OnInit {
     // Limpiar el carrito
     this.cartService.clearCart();
 
-    // Mostrar confirmación y redirigir
-    alert(`¡Compra confirmada!\n\nNúmero de reserva: ${reserva.id}\nTotal: $${this.total}\n\nGracias por tu compra.`);
+    // Mostrar confirmación y redirigir (usando totalFinal en lugar de this.total)
+    alert(`¡Compra confirmada!\n\nNúmero de reserva: ${reserva.id}\nTotal: $${totalFinal}\n\nGracias por tu compra.`);
     this.router.navigate(['/home']);
   }
 

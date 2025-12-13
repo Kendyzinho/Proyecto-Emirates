@@ -42,7 +42,8 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleFlights(): void {
-    this.showFlights = !this.showFlights;
+    // Navegar a la página de búsqueda de vuelos
+    this.router.navigate(['/flights']);
   }
 
   toggleCart(): void {
