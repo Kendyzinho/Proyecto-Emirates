@@ -8,7 +8,16 @@
         <div class="card-body" *ngIf="currentUser">
           <!-- Avatar / Icono de usuario -->
           <div class="text-center mb-4">
-            <div class="avatar-circle bg-danger text-white">
+            <img 
+              *ngIf="currentUser.foto" 
+              [src]="currentUser.foto" 
+              alt="Perfil" 
+              class="profile-photo"
+            >
+            <div 
+              *ngIf="!currentUser.foto" 
+              class="avatar-circle bg-danger text-white"
+            >
               <h1 class="mb-0">{{currentUser.nombre?.charAt(0)}}{{currentUser.apellido?.charAt(0)}}</h1>
             </div>
           </div>
