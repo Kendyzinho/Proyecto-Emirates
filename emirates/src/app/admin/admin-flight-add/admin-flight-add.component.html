@@ -1,1 +1,134 @@
-<p>admin-flight-add works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+          <h3 class="mb-0">Crear Nuevo Vuelo</h3>
+        </div>
+        <div class="card-body">
+          <form>
+            <h5 class="mb-3">Información del Vuelo</h5>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Origen *</label>
+                  <input type="text" class="form-control" [(ngModel)]="newFlight.origen" name="origen" placeholder="Dubai" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Destino *</label>
+                  <input type="text" class="form-control" [(ngModel)]="newFlight.destino" name="destino" placeholder="Madrid" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Fecha *</label>
+                  <input type="date" class="form-control" [(ngModel)]="newFlight.fecha" name="fecha" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Hora *</label>
+                  <input type="time" class="form-control" [(ngModel)]="newFlight.hora" name="hora" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Duración *</label>
+                  <input type="text" class="form-control" [(ngModel)]="newFlight.duracion" name="duracion" placeholder="7h 30m" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Precio ($) *</label>
+                  <input type="number" class="form-control" [(ngModel)]="newFlight.precio" name="precio" min="0" step="0.01" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Asientos Disponibles *</label>
+                  <input type="number" class="form-control" [(ngModel)]="newFlight.disponibles" name="disponibles" min="0" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Aerolínea</label>
+                  <input type="text" class="form-control" [(ngModel)]="newFlight.aerolinea" name="aerolinea" value="Emirates">
+                </div>
+              </div>
+            </div>
+
+            <hr>
+            <h5 class="mb-3">Información del Piloto</h5>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Nombre *</label>
+                  <input type="text" class="form-control" [(ngModel)]="newFlight.piloto.nombre" name="pilotoNombre" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Apellido *</label>
+                  <input type="text" class="form-control" [(ngModel)]="newFlight.piloto.apellido" name="pilotoApellido" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Licencia *</label>
+                  <input type="text" class="form-control" [(ngModel)]="newFlight.piloto.licencia" name="pilotoLicencia" placeholder="ATPL-2025-001" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Horas de Vuelo *</label>
+                  <input type="number" class="form-control" [(ngModel)]="newFlight.piloto.horas_vuelo" name="pilotoHoras" min="0" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Foto del Piloto *</label>
+              <div class="d-flex gap-3 align-items-center">
+                <img 
+                  *ngIf="newFlight.piloto.foto" 
+                  [src]="newFlight.piloto.foto" 
+                  alt="Piloto" 
+                  class="pilot-preview"
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  accept="image/*"
+                  (change)="onFotoChange($event)"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+              <button type="button" class="btn btn-danger" (click)="saveFlight()">
+                Crear Vuelo
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="cancel()">
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,43 +1,102 @@
-<div class="admin-dashboard container mt-4">
-
-  <h1 class="dashboard-title">Panel de Administración</h1>
-  <p class="dashboard-subtitle">Bienvenido al panel administrativo de Emirates</p>
-
-  <div class="row mt-4">
-
-    <!-- lista de vuelos -->
-    <div class="col-md-4">
-      <div class="card admin-card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Vuelos</h5>
-          <p class="card-text">Gestiona todos los vuelos disponibles.</p>
-          <a routerLink="/admin/flights" class="btn btn-danger w-100">Ver Vuelos</a>
-        </div>
+<div class="container-fluid mt-5">
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1 class="mb-0">Panel de Administrador</h1>
+        <button class="btn btn-secondary" (click)="navigateToHome()">
+          <i class="bi bi-house"></i> Volver a Home
+        </button>
       </div>
     </div>
-
-    <!-- agregar vuelo -->
-    <div class="col-md-4">
-      <div class="card admin-card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Agregar Vuelo</h5>
-          <p class="card-text">Crea un nuevo vuelo en el sistema.</p>
-          <a routerLink="/admin/flights/add" class="btn btn-danger w-100">Agregar</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- perfil admin -->
-    <div class="col-md-4">
-      <div class="card admin-card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Mi Cuenta</h5>
-          <p class="card-text">Ver o editar información personal.</p>
-          <a routerLink="/customer/profile" class="btn btn-danger w-100">Perfil</a>
-        </div>
-      </div>
-    </div>
-
   </div>
 
+  <!-- Estadísticas -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card stat-card">
+        <div class="card-body">
+          <h5 class="card-title text-muted">Total de Vuelos</h5>
+          <h2 class="text-danger">{{totalFlights}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card stat-card">
+        <div class="card-body">
+          <h5 class="card-title text-muted">Pasajeros Disponibles</h5>
+          <h2 class="text-success">{{totalPassengers}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card stat-card">
+        <div class="card-body">
+          <h5 class="card-title text-muted">Ingresos Potenciales</h5>
+          <h2 class="text-info">${{totalRevenue | number:'1.2-2'}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card stat-card">
+        <div class="card-body">
+          <h5 class="card-title text-muted">Estado</h5>
+          <h2 class="text-warning">Activo</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botones de acción -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <button class="btn btn-danger btn-lg me-2" (click)="navigateToAddFlight()">
+        <i class="bi bi-plus-circle"></i> Crear Nuevo Vuelo
+      </button>
+      <button class="btn btn-outline-danger btn-lg" (click)="navigateToFlightsList()">
+        <i class="bi bi-list"></i> Ver Todos los Vuelos
+      </button>
+    </div>
+  </div>
+
+  <!-- Últimos vuelos -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-danger text-white">
+          <h5 class="mb-0">Últimos Vuelos Creados</h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Origen</th>
+                <th>Destino</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Piloto</th>
+                <th>Precio</th>
+                <th>Disponibles</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let flight of recentFlights">
+                <td><strong>{{flight.origen}}</strong></td>
+                <td>{{flight.destino}}</td>
+                <td>{{flight.fecha}}</td>
+                <td>{{flight.hora}}</td>
+                <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <img [src]="flight.piloto.foto || 'assets/default-pilot.png'" alt="Piloto" class="pilot-thumb">
+                    <span>{{flight.piloto.nombre}}</span>
+                  </div>
+                </td>
+                <td><span class="badge bg-success">${{flight.precio}}</span></td>
+                <td>{{flight.disponibles}} asientos</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

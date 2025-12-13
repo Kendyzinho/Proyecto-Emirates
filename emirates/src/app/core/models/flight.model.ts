@@ -1,3 +1,12 @@
+export interface Pilot {
+  id: string;
+  nombre: string;
+  apellido: string;
+  foto: string;
+  licencia: string;
+  horas_vuelo: number;
+}
+
 export interface Flight {
   id: string;
   origen: string;
@@ -8,6 +17,7 @@ export interface Flight {
   precio: number;
   aerolinea: string;
   disponibles: number;
+  piloto: Pilot;
 }
 
 export interface CartItem {

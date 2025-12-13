@@ -56,6 +56,12 @@ const routes: Routes = [
     ]
   },
 
+  // Rutas Admin
+  { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'admin/flight-add', component: AdminFlightAddComponent, canActivate: [AuthGuard] },
+  { path: 'admin/flights-list', component: AdminFlightsListComponent, canActivate: [AuthGuard] },
+  { path: 'admin/flight-edit/:id', component: AdminFlightEditComponent, canActivate: [AuthGuard] },
+
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', redirectTo: 'home'}
 ];

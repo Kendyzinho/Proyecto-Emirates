@@ -1,1 +1,136 @@
-<p>admin-flight-edit works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+          <h3 class="mb-0">Editar Vuelo</h3>
+        </div>
+        <div class="card-body" *ngIf="editedFlight">
+          <form>
+            <h5 class="mb-3">Información del Vuelo</h5>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Origen *</label>
+                  <input type="text" class="form-control" [(ngModel)]="editedFlight.origen" name="origen" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Destino *</label>
+                  <input type="text" class="form-control" [(ngModel)]="editedFlight.destino" name="destino" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Fecha *</label>
+                  <input type="date" class="form-control" [(ngModel)]="editedFlight.fecha" name="fecha" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Hora *</label>
+                  <input type="time" class="form-control" [(ngModel)]="editedFlight.hora" name="hora" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Duración *</label>
+                  <input type="text" class="form-control" [(ngModel)]="editedFlight.duracion" name="duracion" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Precio ($) *</label>
+                  <input type="number" class="form-control" [(ngModel)]="editedFlight.precio" name="precio" min="0" step="0.01" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Asientos Disponibles *</label>
+                  <input type="number" class="form-control" [(ngModel)]="editedFlight.disponibles" name="disponibles" min="0" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Aerolínea</label>
+                  <input type="text" class="form-control" [(ngModel)]="editedFlight.aerolinea" name="aerolinea">
+                </div>
+              </div>
+            </div>
+
+            <hr>
+            <h5 class="mb-3">Información del Piloto</h5>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Nombre *</label>
+                  <input type="text" class="form-control" [(ngModel)]="editedFlight.piloto.nombre" name="pilotoNombre" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Apellido *</label>
+                  <input type="text" class="form-control" [(ngModel)]="editedFlight.piloto.apellido" name="pilotoApellido" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Licencia *</label>
+                  <input type="text" class="form-control" [(ngModel)]="editedFlight.piloto.licencia" name="pilotoLicencia" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Horas de Vuelo *</label>
+                  <input type="number" class="form-control" [(ngModel)]="editedFlight.piloto.horas_vuelo" name="pilotoHoras" min="0" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Foto del Piloto</label>
+              <div class="d-flex gap-3 align-items-center">
+                <img 
+                  *ngIf="editedFlight.piloto.foto" 
+                  [src]="editedFlight.piloto.foto" 
+                  alt="Piloto" 
+                  class="pilot-preview"
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  accept="image/*"
+                  (change)="onFotoChange($event)"
+                >
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+              <button type="button" class="btn btn-danger" (click)="saveFlight()">
+                Actualizar Vuelo
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="cancel()">
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="card-body text-center" *ngIf="!editedFlight">
+          <p>Cargando datos del vuelo...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

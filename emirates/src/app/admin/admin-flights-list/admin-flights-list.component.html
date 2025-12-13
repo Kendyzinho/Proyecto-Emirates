@@ -1,1 +1,100 @@
-<p>admin-flights-list works!</p>
+<div class="container-fluid mt-5">
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Listado de Vuelos</h2>
+        <button class="btn btn-danger" (click)="addNewFlight()">
+          <i class="bi bi-plus-circle"></i> Nuevo Vuelo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Buscar origen..."
+        [(ngModel)]="searchOrigen"
+        (keyup)="filterFlights()"
+      >
+    </div>
+    <div class="col-md-3">
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Buscar destino..."
+        [(ngModel)]="searchDestino"
+        (keyup)="filterFlights()"
+      >
+    </div>
+    <div class="col-md-3">
+      <input 
+        type="date" 
+        class="form-control"
+        [(ngModel)]="searchFecha"
+        (change)="filterFlights()"
+      >
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">
+        Limpiar Filtros
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla de vuelos -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-danger">
+              <tr>
+                <th>Origen</th>
+                <th>Destino</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Duración</th>
+                <th>Piloto</th>
+                <th>Precio</th>
+                <th>Disponibles</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let flight of filteredFlights">
+                <td><strong>{{flight.origen}}</strong></td>
+                <td>{{flight.destino}}</td>
+                <td>{{flight.fecha}}</td>
+                <td>{{flight.hora}}</td>
+                <td>{{flight.duracion}}</td>
+                <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <img [src]="flight.piloto.foto || 'assets/default-pilot.png'" alt="Piloto" class="pilot-thumb">
+                    <span>{{flight.piloto.nombre}} {{flight.piloto.apellido}}</span>
+                  </div>
+                </td>
+                <td><span class="badge bg-success">${{flight.precio}}</span></td>
+                <td>{{flight.disponibles}}</td>
+                <td>
+                  <button class="btn btn-sm btn-warning me-2" (click)="editFlight(flight.id)">
+                    Editar
+                  </button>
+                  <button class="btn btn-sm btn-danger" (click)="deleteFlight(flight.id)">
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer text-muted" *ngIf="filteredFlights.length === 0">
+          <p class="mb-0">No hay vuelos disponibles</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

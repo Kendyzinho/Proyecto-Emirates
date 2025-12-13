@@ -1,0 +1,29 @@
+.pilot-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #dc3545;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.card {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+hr {
+  margin: 2rem 0;
+  border-color: #e9ecef;
+}
+
+h5 {
+  color: #333;
+  font-weight: 600;
+}
