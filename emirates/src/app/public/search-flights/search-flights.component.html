@@ -137,7 +137,18 @@
                 <small class="text-muted d-block mb-3">por pasajero</small>
 
                 <div class="d-grid gap-2">
+                  <!-- Botón de Login si no está autenticado -->
                   <button
+                    *ngIf="!authService.currentUserValue"
+                    class="btn btn-danger"
+                    (click)="addToCart(vuelo)"
+                  >
+                    <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión para reservar
+                  </button>
+
+                  <!-- Botón de Agregar al Carrito si está autenticado -->
+                  <button
+                    *ngIf="authService.currentUserValue"
                     class="btn"
                     [class.btn-danger]="!isInCart(vuelo.id)"
                     [class.btn-secondary]="isInCart(vuelo.id)"
@@ -275,7 +286,21 @@
         <button type="button" class="btn btn-outline-secondary" (click)="cerrarDetalles()">
           Cerrar
         </button>
+
+        <!-- Botón de Login si no está autenticado -->
         <button
+          *ngIf="!authService.currentUserValue"
+          type="button"
+          class="btn btn-danger"
+          (click)="addToCart(selectedFlight); cerrarDetalles();"
+        >
+          <i class="bi bi-box-arrow-in-right me-2"></i>
+          Iniciar sesión para reservar
+        </button>
+
+        <!-- Botón de Agregar al Carrito si está autenticado -->
+        <button
+          *ngIf="authService.currentUserValue"
           type="button"
           class="btn btn-danger"
           (click)="addToCart(selectedFlight); cerrarDetalles();"

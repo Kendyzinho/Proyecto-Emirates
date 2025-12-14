@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlightsService } from '../../core/services/flights.service';
 import { CartService } from '../../core/services/cart.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Flight } from '../../core/models/flight.model';
 
 @Component({
@@ -26,6 +27,7 @@ export class SearchFlightsComponent implements OnInit {
   constructor(
     public cartService: CartService,
     private flightsService: FlightsService,
+    public authService: AuthService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -75,6 +77,13 @@ export class SearchFlightsComponent implements OnInit {
   }
 
   addToCart(vuelo: Flight) {
+    // Verificar si el usuario está autenticado
+    if (!this.authService.currentUserValue) {
+      alert('Debes iniciar sesión para agregar vuelos al carrito');
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.cartService.addToCart(vuelo, 1);
     alert(`Vuelo ${vuelo.origen} → ${vuelo.destino} agregado al carrito`);
   }
